@@ -91,7 +91,8 @@ def get_sample(df, col_name, n=100, seed=42):
 
 def q1():
     amostra = get_sample(athletes,'height',n=3000)
-    return bool(sct.shapiro(amostra)[1] > 0.05)
+    stat, pvalue = sct.shapiro(amostra)
+    return bool(pvalue > 0.05)
 
 
 # In[11]:
@@ -115,7 +116,8 @@ q1()
 
 def q2():
     amostra = get_sample(athletes,'height',n=3000)
-    return bool(sct.jarque_bera(amostra)[1] > 0.05)
+    stat, pvalue = sct.jarque_bera(amostra)
+    return bool(pvalue > 0.025)
 
 
 # In[13]:
@@ -139,7 +141,7 @@ def q3():
 
     amostra = get_sample(athletes,'weight',n=3000)
     k2, p = sct.stats.normaltest(amostra)
-    alpha = 0.05
+    alpha = 0.025
 
     return bool(p > alpha)
 
@@ -166,7 +168,7 @@ def q4():
     amostra = get_sample(athletes,'weight',n=3000)
 
     k2, p = sct.stats.normaltest(amostra.apply(np.log))
-    alpha = 0.05
+    alpha = 0.025
     return bool(p > alpha)
 
 
@@ -190,7 +192,7 @@ def q5():
     usa = athletes[athletes['nationality'] == 'USA']['height'].dropna()
     
     k2, p = sct.stats.ttest_ind(bra, usa)
-    alpha = 0.05
+    alpha = 0.025
     return bool(p > alpha)
 
 
@@ -213,7 +215,7 @@ def q6():
     can = athletes[athletes['nationality'] == 'CAN']['height'].dropna()
 
     k2, p = sct.stats.ttest_ind(bra, can)
-    alpha = 0.05
+    alpha = 0.025
     return bool(p > alpha)
 
 
